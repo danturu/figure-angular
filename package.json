@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git", "url": "git+https://github.com/rosendi/ng2-notes-firebase.git"
+    "type": "git", "url": "git+https://github.com/rosendi/figure.git"
   },
   "dependencies": {
     "angular2": "2.0.0-alpha.45",
