@@ -83,7 +83,7 @@ let clientConfig = {
   src: 'app/client', dest: 'public/assets',
 
   exts: {
-    svg: "svg", images: "{png,jpg}", fonts: "{eot,svg,ttf,woff,woff2}"
+    assets: "{svg,png,jpg,eot,svg,ttf,woff,woff2}"
   },
 
   deps: {
@@ -124,19 +124,11 @@ gulp.task('client.build.deps', () => {
   gulp.src(deps).pipe(gulp.dest(clientConfig.dest))
 });
 
-gulp.task('client.build.svg', () =>
-  gulp.src(`${clientConfig.src}/assets/images/**/*.${clientConfig.exts.svg}`).pipe(gulp.dest(clientConfig.dest))
+gulp.task('client.build.assets', () =>
+  gulp.src(`${clientConfig.src}/assets/**/*.${clientConfig.exts.assets}`).pipe(gulp.dest(clientConfig.dest))
 );
 
-gulp.task('client.build.images', () =>
-  gulp.src(`${clientConfig.src}/assets/images/**/*.${clientConfig.exts.images}`).pipe(gulp.dest(clientConfig.dest))
-);
-
-gulp.task('client.build.fonts', () =>
-  gulp.src(`${clientConfig.src}/assets/fonts/**/*.${clientConfig.exts.fonts}`).pipe(gulp.dest(clientConfig.dest))
-);
-
-gulp.task('client.build', sequence('client.clean', ['client.build.deps', 'client.build.svg', 'client.build.fonts', 'client.build.images'], ['client.build.ts', 'client.build.sass']));
+gulp.task('client.build', sequence('client.clean', ['client.build.deps', 'client.build.assets'], ['client.build.ts', 'client.build.sass']));
 
 // Watch
 
@@ -152,16 +144,8 @@ gulp.task('client.watch.deps', () =>
   gulp.watch(clientConfig.deps[env].map(dep => `node_modules/${dep}`), ['build.deps'])
 );
 
-gulp.task('client.watch.svg', () =>
-  gulp.watch(`${clientConfig.src}/assets/images/**/*.${clientConfig.exts.svg}`, ['client.build.svg'])
+gulp.task('client.watch.assets', () =>
+  gulp.watch(`${clientConfig.src}/assets/**/*.${clientConfig.exts.assets}`, ['client.build.assets'])
 )
 
-gulp.task('client.watch.images', () =>
-  gulp.watch(`${clientConfig.src}/assets/images/**/*.${clientConfig.exts.images}`, ['client.build.images'])
-)
-
-gulp.task('client.watch.fonts', () =>
-  gulp.watch(`${clientConfig.src}/assets/fonts/**/*.${clientConfig.exts.fonts}`, ['client.build.fonts'])
-)
-
-gulp.task('client.watch', sequence('client.build', ['client.watch.ts', 'client.watch.sass', 'client.watch.deps', 'client.watch.svg', 'client.watch.images', 'client.watch.fonts']));
+gulp.task('client.watch', sequence('client.build', ['client.watch.ts', 'client.watch.sass', 'client.watch.deps', 'client.watch.assets']));
