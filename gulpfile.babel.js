@@ -91,6 +91,7 @@ let clientConfig = {
       "angular2/bundles/angular2.dev.js",
       "angular2/bundles/router.dev.js",
       "systemjs/dist/system.js",
+      "firebase/lib/firebase-web.js",
     ]
   }
 }

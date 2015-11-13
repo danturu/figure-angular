@@ -3,6 +3,8 @@
 import { View, Component, Inject }        from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 
+import * as Firebase from 'firebase'
+
 @RouteConfig([
 ])
 
@@ -22,6 +24,13 @@ import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 })
 
 export default class App {
+  forms: Firebase;
+
   constructor(@Inject('app.config') config) {
+    this.forms = new Firebase(`${config.firebaseUrl}/forms`);
+
+    this.forms.on("value", snapshot => {
+      console.log(snapshot.val());
+    });
   }
 }
