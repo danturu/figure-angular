@@ -6,9 +6,16 @@
     <base href="/">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/assets/system.js"></script>
+    <script src="/assets/config/system.js"></script>
+    <script src="/assets/angular2.dev.js"></script>
+    <script src="/assets/router.dev.js"></script>
  </head>
 
   <body>
     <app>Loading...</app>
+
+    <script>System.import('bootstrap').catch(console.log.bind(console));</script>
   </body>
 </html>

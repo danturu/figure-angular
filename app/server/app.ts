@@ -1,4 +1,4 @@
-/// <reference path='../../lib/typings/bundle.d.ts' />
+/// <reference path='typings/bundle.d.ts' />
 
 import * as express    from 'express'
 import * as handlebars from 'express-handlebars'

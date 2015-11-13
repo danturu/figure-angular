@@ -2,12 +2,12 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "module": "commonjs",
+    "module": "umd",
     "moduleResolution": "node",
     "noExternalResolve": false,
     "noImplicitAny": false,
     "preserveConstEnums": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "target": "es5"
   },
   "exclude": [
