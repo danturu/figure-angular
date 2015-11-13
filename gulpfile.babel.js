@@ -1,9 +1,11 @@
-import del        from 'del'
-import cprocess   from 'child_process'
-import gulp       from 'gulp';
-import sequence   from 'gulp-sequence'
-import sourcemaps from 'gulp-sourcemaps'
-import ts         from 'gulp-typescript'
+import del          from 'del'
+import cprocess     from 'child_process'
+import gulp         from 'gulp';
+import autoprefixer from 'gulp-autoprefixer'
+import sass         from 'gulp-sass'
+import sequence     from 'gulp-sequence'
+import sourcemaps   from 'gulp-sourcemaps'
+import ts           from 'gulp-typescript'
 
 /**
  * Shared tasks.
@@ -102,8 +104,17 @@ gulp.task('client.clean', done => del(clientConfig.dest, done));
 gulp.task('client.build.ts', () => {
   let result = gulp.src(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`, { base: clientConfig.src }).pipe(sourcemaps.init()).pipe(ts(clientProject));
 
-  return result.js.pipe(sourcemaps.init()).pipe(gulp.dest(clientConfig.dest));
+  return result.js.pipe(sourcemaps.write()).pipe(gulp.dest(clientConfig.dest));
 })
+
+gulp.task('client.build.sass', () =>
+  gulp.src(`${clientConfig.src}/assets/**/*.scss`)
+    .pipe(sourcemaps.init())
+    .pipe(sass({ includePaths: 'node_modules' }))
+    .pipe(autoprefixer())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(clientConfig.dest))
+);
 
 gulp.task('client.build.deps', () => {
   let deps = clientConfig.deps[env].reduce((deps, dep) =>
@@ -125,13 +136,17 @@ gulp.task('client.build.fonts', () =>
   gulp.src(`${clientConfig.src}/assets/fonts/**/*.${clientConfig.exts.fonts}`).pipe(gulp.dest(clientConfig.dest))
 );
 
-gulp.task('client.build', sequence('client.clean', ['client.build.deps', 'client.build.svg', 'client.build.fonts', 'client.build.images'], ['client.build.ts']));
+gulp.task('client.build', sequence('client.clean', ['client.build.deps', 'client.build.svg', 'client.build.fonts', 'client.build.images'], ['client.build.ts', 'client.build.sass']));
 
 // Watch
 
 gulp.task('client.watch.ts', () =>
   gulp.watch(`{${clientConfig.lib},${clientConfig.src}}/**/*.ts`, ['client.build.ts'])
 );
+
+gulp.task('client.watch.sass', () =>
+  gulp.watch(`${clientConfig.src}/assets/**/*.scss`, ['client.build.sass'])
+)
 
 gulp.task('client.watch.deps', () =>
   gulp.watch(clientConfig.deps[env].map(dep => `node_modules/${dep}`), ['build.deps'])
@@ -149,4 +164,4 @@ gulp.task('client.watch.fonts', () =>
   gulp.watch(`${clientConfig.src}/assets/fonts/**/*.${clientConfig.exts.fonts}`, ['client.build.fonts'])
 )
 
-gulp.task('client.watch', sequence('client.build', ['client.watch.ts', 'client.watch.deps', 'client.watch.svg', 'client.watch.images', 'client.watch.fonts']));
+gulp.task('client.watch', sequence('client.build', ['client.watch.ts', 'client.watch.sass', 'client.watch.deps', 'client.watch.svg', 'client.watch.images', 'client.watch.fonts']));
