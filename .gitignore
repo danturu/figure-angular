@@ -1,6 +1,7 @@
+**/*.js
 .DS_Store
 .npm
 .tmp
-dist
 node_modules
 npm-debug.log
+!gulpfile.babel.js

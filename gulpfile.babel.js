@@ -13,7 +13,7 @@ let sharedConfig = {
 }
 
 let serverConfig = {
-  src: 'app/server'
+  src: 'app/server', dest: ''
 }
 
 gulp.task('play', sequence('server.watch', 'server.start'));
@@ -29,7 +29,7 @@ gulp.task('server.clean', (done) =>
 gulp.task('server.build.ts', () => {
   let result = gulp.src(`{${sharedConfig.bin},${sharedConfig.lib},${serverConfig.src}}/**/*.ts`).pipe(ts(serverProject));
 
-  return result.js.pipe(gulp.dest(sharedConfig.dest));
+  return result.js.pipe(gulp.dest(serverConfig.dest));
 })
 
 gulp.task('server.build', sequence('server.clean', ['server.build.ts']));
@@ -49,7 +49,7 @@ var node;
 gulp.task('server.start', () => {
   if (node) node.kill()
 
-  node = cprocess.spawn('node', ['dist/bin/www'], { stdio: 'inherit' })
+  node = cprocess.spawn('node', ['bin/www'], { stdio: 'inherit' })
 
   node.on('close', (code) => {
     if (code === 8) gulp.log('Error detected, waiting for changes...');
