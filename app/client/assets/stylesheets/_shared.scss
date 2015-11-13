@@ -1,0 +1,73 @@
+html {
+  box-sizing: border-box !important;
+  font-size: 62.5%;
+  height: 100%;
+}
+
+body {
+  color: lighten(black, 25%);
+  font-family: OpenSans, $fonts;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+*, *:before, *:after {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: inherit !important;
+}
+
+h1, h2, h3, h4, h5, h6, address {
+  margin: 0;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+a {
+  color: lighten(black, 20%);
+  text-decoration: none;
+
+  &:hover {
+    color: $color-figure;
+    cursor: pointer;
+  }
+}
+
+ul, ol {
+  list-style-type: none;
+  margin:  0;
+  padding: 0;
+}
+
+svg {
+  display: block;
+}
+
+svg:not(.row) path {
+  fill: currentColor;
+}
+
+p {
+  margin: 0;
+}
+
+b {
+  font-weight: 500;
+}
