@@ -1,11 +1,21 @@
 /// <reference path='../../lib/typings/bundle.d.ts' />
 
-import * as express from "express"
+import * as express    from 'express'
+import * as handlebars from 'express-handlebars'
+
+import ROUTES from './config/routes'
 
 let app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// Engines
+
+app.engine('.hbs', handlebars.create({ extname: '.hbs', layoutsDir: `${__dirname}/views`, defaultLayout: 'pages' }).engine);
+
+app.set('view engine', '.hbs');
+app.set('views', `${__dirname}/views`);
+
+// Routes
+
+app.use('/', ROUTES);
 
 export default app;

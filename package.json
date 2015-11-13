@@ -14,6 +14,7 @@
   "dependencies": {
     "angular2": "2.0.0-alpha.45",
     "express": "4.13.3",
+    "express-handlebars": "2.0.1",
     "systemjs": "0.19.5"
   },
   "devDependencies": {
