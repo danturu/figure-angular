@@ -14,6 +14,8 @@ app.engine('.hbs', handlebars.create({ extname: '.hbs', layoutsDir: `${__dirname
 app.set('view engine', '.hbs');
 app.set('views', `${__dirname}/views`);
 
+app.use(express.static(`${__dirname}/views`));
+
 // Routes
 
 app.use('/', ROUTES);
