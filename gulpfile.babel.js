@@ -110,7 +110,7 @@ gulp.task('client.build.ts', () => {
 gulp.task('client.build.sass', () =>
   gulp.src(`${clientConfig.src}/assets/**/*.scss`)
     .pipe(sourcemaps.init())
-    .pipe(sass({ includePaths: 'node_modules' }))
+    .pipe(sass({ includePaths: 'node_modules' }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(clientConfig.dest))
