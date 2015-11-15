@@ -134,7 +134,7 @@ gulp.task('client.build', sequence('client.clean', ['client.build.deps', 'client
 // Watch
 
 gulp.task('client.watch.ts', () =>
-  gulp.watch(`{${clientConfig.lib},${clientConfig.src}}/**/*.ts`, ['client.build.ts'])
+  gulp.watch(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`, ['client.build.ts'])
 );
 
 gulp.task('client.watch.sass', () =>
@@ -142,7 +142,7 @@ gulp.task('client.watch.sass', () =>
 )
 
 gulp.task('client.watch.deps', () =>
-  gulp.watch(clientConfig.deps[env].map(dep => `node_modules/${dep}`), ['build.deps'])
+  gulp.watch(clientConfig.deps[env].map(dep => `node_modules/${dep}`), ['client.build.deps'])
 );
 
 gulp.task('client.watch.assets', () =>
