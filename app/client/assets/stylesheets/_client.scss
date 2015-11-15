@@ -1,0 +1,100 @@
+body.app {
+  height: 100%;
+}
+
+app {
+  @include size(100%);
+  display: flex;
+}
+
+app > header {
+  background-color: $color-figure;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 300px;
+  min-width: 200px;
+
+  a.logo {
+    @include size(100% 50px);
+    display: block;
+    margin: 20px 0 10px;
+    padding: 0px 30px;
+
+    i {
+      @include size(100%);
+      background: transparent url("figure.svg#datauri") center left / contain no-repeat;
+      display: block;
+    }
+  }
+
+  nav {
+    color: white;
+
+    li {
+      position: relative;
+    }
+
+    a {
+      transition: color .1s linear;
+      color: darken(white, 20);
+      display: block;
+      font-weight: 500;
+
+      &:hover {
+        color: white;
+      }
+
+      &.router-link-active {
+        background-color: rgba(white, .1);
+        color: white;
+      }
+    }
+  }
+
+  nav.forms {
+    flex: 1;
+
+    overflow: {
+      x: hidden; y: auto;
+    }
+
+    a.show, a.new {
+      padding: 20px 30px;
+    }
+
+    a.edit {
+      @include size(20px);
+      background-color: rgba(white, .5);
+      border-radius: 50%;
+      color: $color-figure;
+      position: absolute;
+      right: 15px;
+      text-align: center;
+      top: 20px;
+      transition: background-color .1s linear;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+  }
+
+  nav.account {
+    margin-top: auto;
+
+    a {
+      padding: 20px 30px;
+    }
+  }
+}
+
+app main {
+  background-color: darken(white, 5);
+  flex: 4;
+  min-width: 700px;
+
+  overflow: {
+    x: hidden; y: auto;
+  }
+}
