@@ -5,7 +5,7 @@ import * as handlebars from 'express-handlebars'
 
 import { router } from './config/routes'
 
-let app = express();
+export const app = express();
 
 // Engines
 
@@ -19,5 +19,3 @@ app.use(express.static(`${__dirname}/../../public`));
 // Routes
 
 app.use('/', router);
-
-export default app;
