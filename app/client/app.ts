@@ -1,34 +1,67 @@
 /// <reference path='typings/bundle.d.ts' />
 
-import { View, Component, Inject }        from 'angular2/angular2'
+import { View, Component } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 
-import { Header } from './components/shared/header'
-import * as Forms from './components/forms/forms'
+import { FirebaseRouter } from './services/firebase_router'
+
+import * as AuthComponent from './components/auth/auth'
+import * as FormsComponent from './components/forms/forms'
+import * as SharedComponent from './components/shared/shared'
 
 @RouteConfig([
-  { path: '/forms/new',         component: Forms.New,  as: "NewForm" },
-  { path: '/forms/:formId',     component: Forms.Show, as: "ShowForm" },
-  { path: '/forms/:formId/...', component: Forms.Edit, as: "EditForm" }
+  {
+    path: '/',
+    component: FormsComponent.New,
+    as: "Home"
+  },
+  {
+    path: '/login',
+    component: AuthComponent.Login,
+    as: "Login"
+  },
+  {
+    path: '/forms/new',
+    component: FormsComponent.New,
+    as: "NewForm"
+  },
+  {
+    path: '/forms/:formId',
+    component: FormsComponent.Show,
+    as: "ShowForm"
+  },
+  {
+    path: '/forms/:formId/...',
+    component: FormsComponent.Edit,
+    as: "EditForm"
+  },
 ])
 
 @Component({
-  selector: 'app'
+  selector: 'app',
 })
 
 @View({
-  directives: [ROUTER_DIRECTIVES, Header],
+  directives: [
+    ROUTER_DIRECTIVES,
+    SharedComponent.Header,
+  ],
 
   template: `
-    <header class="app"></header>
+    <header class="app" *ng-if="loggedIn"></header>
 
     <main>
       <router-outlet></router-outlet>
     </main>
-  `
+  `,
 })
 
-export default class App {
-  constructor(@Inject('app.config') config) {
+export class App {
+  loggedIn: boolean;
+
+  constructor(firebaseRouter: FirebaseRouter) {
+    firebaseRouter.ref().onAuth((authData) => {
+      this.loggedIn = !!authData;
+    });
   }
 }

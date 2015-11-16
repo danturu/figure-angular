@@ -1,16 +1,23 @@
-import { CORE_DIRECTIVES, Component, View, Inject } from 'angular2/angular2'
-import { RouteParams }                              from 'angular2/router'
+import { Component, View } from 'angular2/angular2'
+import { RouteParams, CanActivate } from 'angular2/router'
 
-import { AssignLocal }       from '../../directives/assign_local'
+import { AssignLocal } from '../../directives/assign_local'
 import { FirebaseEventPipe } from '../../pipes/firebase_event_pipe'
+import { FirebaseRouter } from '../../services/firebase_router'
+import { authRequired } from '../../utils/can_activate'
 
 @Component({
-  selector: 'form-component.show'
+  selector: 'form-component.show',
 })
 
 @View({
-  directives: [CORE_DIRECTIVES, AssignLocal],
-  pipes: [FirebaseEventPipe],
+  directives: [
+    AssignLocal,
+  ],
+
+  pipes: [
+    FirebaseEventPipe,
+  ],
 
   template: `
     <div *assign-local="#form to formUrl | firebaseEvent" >
@@ -22,13 +29,15 @@ import { FirebaseEventPipe } from '../../pipes/firebase_event_pipe'
         </container>
       </div>
     </div>
-  `
+  `,
 })
+
+@CanActivate(authRequired)
 
 export class Show {
   formUrl: string;
 
-  constructor(@Inject('app.config') config, params: RouteParams) {
-    this.formUrl = `${config.firebaseUrl}/forms/${params.get('formId')}`
+  constructor(firebaseRouter: FirebaseRouter, params: RouteParams) {
+    this.formUrl = firebaseRouter.url(`/forms/$userId/${params.get('formId')}`);
   }
 }

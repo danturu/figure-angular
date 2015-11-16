@@ -1,7 +1,9 @@
 import { bootstrap, provide } from 'angular2/angular2'
-import { ROUTER_PROVIDERS }   from 'angular2/router'
+import { ROUTER_PROVIDERS } from 'angular2/router'
 
-import CONFIG from './config/config'
-import App    from './app'
+import { App } from './app'
+import { CONFIG } from './config/config'
+import { FirebaseRouter } from './services/firebase_router'
+import { appInjector } from './utils/app_injector'
 
-bootstrap(App, [ROUTER_PROVIDERS, provide('app.config', { useValue: CONFIG })])
+bootstrap(App, [ROUTER_PROVIDERS, FirebaseRouter, provide('app.config', { useValue: CONFIG })]).then(appRef => appInjector(appRef.injector));

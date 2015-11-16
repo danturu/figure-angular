@@ -1,5 +1,3 @@
-let config = {
-  firebaseUrl: 'https://figure-development.firebaseio.com'
+export const CONFIG = {
+  firebaseUrl: 'https://figure-development.firebaseio.com',
 }
-
-export default config;

@@ -1,24 +1,34 @@
-import { CORE_DIRECTIVES, Component, View, Inject }                  from 'angular2/angular2'
-import { RouterOutlet, RouteParams, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component, View } from 'angular2/angular2'
+import { ROUTER_DIRECTIVES, Router, RouterOutlet, RouteParams, RouteConfig, CanActivate } from 'angular2/router'
 
-import * as Firebase from 'firebase'
-
-import { AssignLocal }       from '../../directives/assign_local'
+import { AssignLocal } from '../../directives/assign_local'
 import { FirebaseEventPipe } from '../../pipes/firebase_event_pipe'
+import { FirebaseRouter } from '../../services/firebase_router'
+import { authRequired } from '../../utils/can_activate'
 
-import * as Dashboard from './dashboard/dashboard'
+import * as DashboardComponent from './dashboard/dashboard'
 
 @RouteConfig([
-  { path: '/setup', component: Dashboard.Setup, as: "Setup" }
+  {
+    path: '/setup',
+    component: DashboardComponent.Setup,
+    as: "Setup"
+  },
 ])
 
 @Component({
-  selector: 'form-component.edit'
+  selector: 'form-component.edit',
 })
 
 @View({
-  directives: [CORE_DIRECTIVES, ROUTER_DIRECTIVES, AssignLocal],
-  pipes: [FirebaseEventPipe],
+  directives: [
+    ROUTER_DIRECTIVES,
+    AssignLocal,
+  ],
+
+  pipes: [
+    FirebaseEventPipe,
+  ],
 
   template: `
     <div *assign-local="#form to formUrl | firebaseEvent" >
@@ -38,19 +48,22 @@ import * as Dashboard from './dashboard/dashboard'
         <button type="button" (click)="destroy()">Delete Form</form>
       </div>
     </div>
-  `
+  `,
 })
+
+@CanActivate(authRequired)
 
 export class Edit {
   formUrl: string;
-  formRef: Firebase;
 
-  constructor(@Inject('app.config') config, params: RouteParams) {
-    this.formUrl = `${config.firebaseUrl}/forms/${params.get('formId')}`
-    this.formRef = new Firebase(this.formUrl);
+  private _formRef: Firebase;
+
+  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router, params: RouteParams) {
+    this.formUrl = this._firebaseRouter.url(`/forms/$userId/${params.get('formId')}`);
   }
 
   destroy() {
-    this.formRef.remove()
+    this._firebaseRouter.ref(this.formUrl).remove()
+    this._router.navigate(['/Home']);
   }
 }

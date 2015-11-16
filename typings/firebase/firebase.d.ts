@@ -317,27 +317,18 @@ interface FirebaseAuthData {
 	token: string;
 	expires: number;
 	auth: Object;
-	google?: FirebaseAuthDataGoogle;
 }
 
-interface FirebaseAuthDataGoogle {
-	accessToken: string;
-	cachedUserProfile: FirebaseAuthDataGoogleCachedUserProfile;
-	displayName: string;
-	email?: string;
-	id: string;
-	profileImageURL: string;
-}
-
-interface FirebaseAuthDataGoogleCachedUserProfile {
-	"family name"?: string;
-	gender?: string;
-	"given name"?: string;
-	id?: string;
-	link?: string;
-	locale?: string;
-	name?: string;
-	picture?: string;
+interface FirebaseAuthDataGithub extends FirebaseAuthData {
+  github: {
+		accessToken: string;
+		cachedUserProfile: any;
+		displayName: string;
+		email?: string;
+		id: string;
+		profileImageURL: string;
+		username: string;
+	}
 }
 
 interface FirebaseCredentials {

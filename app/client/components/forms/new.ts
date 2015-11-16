@@ -1,14 +1,18 @@
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, Component, View, Inject } from 'angular2/angular2'
-import * as Firebase from 'firebase'
+import { FORM_DIRECTIVES, Component, View } from 'angular2/angular2'
+import { Router, CanActivate } from 'angular2/router'
 
+import { FirebaseRouter } from '../../services/firebase_router'
 import { FormAttrs } from '../../../../lib/models/form'
+import { authRequired } from '../../utils/can_activate'
 
 @Component({
-  selector: 'form-component.new'
+  selector: 'form-component.new',
 })
 
 @View({
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [
+    FORM_DIRECTIVES
+  ],
 
   template: `
     <header class="new">
@@ -28,17 +32,20 @@ import { FormAttrs } from '../../../../lib/models/form'
         <button type="submit" [disabled]="!f.valid">Create Form</form>
       </div>
     </form>
-  `
+  `,
 })
 
-export class New {
-  formsRef: Firebase;
+@CanActivate(authRequired)
 
-  constructor(@Inject('app.config') config) {
-    this.formsRef = new Firebase(`${config.firebaseUrl}/forms`);
+export class New {
+  private _formsRef: Firebase;
+
+  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router) {
+    this._formsRef = _firebaseRouter.ref('forms/$userId')
   }
 
   onSubmit(form: FormAttrs) {
-    this.formsRef.push(form);
+    let formId = this._formsRef.push(form).key();
+    this._router.navigate(['/ShowForm', { formId: formId }]);
   }
 }

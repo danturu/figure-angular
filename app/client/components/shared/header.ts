@@ -1,11 +1,12 @@
-import { CORE_DIRECTIVES, Inject, Component, View, Pipe, PipeTransform } from 'angular2/angular2'
-import { ROUTER_DIRECTIVES }                                             from 'angular2/router'
+import { Component, View, Pipe, PipeTransform } from 'angular2/angular2'
+import { ROUTER_DIRECTIVES, Router } from 'angular2/router'
 
+import { FirebaseRouter } from '../../services/firebase_router'
 import { FirebaseEventPipe } from '../../pipes/firebase_event_pipe'
 import { FirebaseArrayPipe } from '../../pipes/firebase_array_pipe'
 
 @Pipe({
-  name: 'sort'
+  name: 'sort',
 })
 
 class SortPipe implements PipeTransform {
@@ -29,8 +30,15 @@ class SortPipe implements PipeTransform {
 })
 
 @View({
-  directives: [CORE_DIRECTIVES, ROUTER_DIRECTIVES],
-  pipes: [FirebaseEventPipe, FirebaseArrayPipe, SortPipe],
+  directives: [
+    ROUTER_DIRECTIVES,
+  ],
+
+  pipes: [
+    FirebaseEventPipe,
+    FirebaseArrayPipe,
+    SortPipe,
+  ],
 
   template: `
     <a [router-link]="['/NewForm']" class="logo"><i></i></a>
@@ -55,17 +63,20 @@ class SortPipe implements PipeTransform {
         </li>
       </ul>
     </nav>
-  `
+  `,
 })
 
 export class Header {
   formsUrl: string;
 
-  constructor(@Inject('app.config') config) {
-    this.formsUrl = `${config.firebaseUrl}/forms`;
+  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router) {
+    this.formsUrl = this._firebaseRouter.url('/forms/$userId')
   }
 
   logout(event: MouseEvent) {
     event.preventDefault();
+
+    this._firebaseRouter.ref().unauth();
+    this._router.navigate(['Login']);
   }
 }

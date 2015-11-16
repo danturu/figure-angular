@@ -1,7 +1,11 @@
-import { Directive, ViewRef, ViewContainerRef, TemplateRef} from 'angular2/angular2'
+import { Directive, ViewRef, ViewContainerRef, TemplateRef } from 'angular2/angular2'
 
 @Directive({
-  selector: '[assign-local]', inputs: ['local: assignLocalTo']
+  selector: '[assign-local]',
+
+  inputs: [
+    'local: assignLocalTo'
+  ],
 })
 
 export class AssignLocal {
@@ -10,7 +14,7 @@ export class AssignLocal {
   constructor(private viewContainer: ViewContainerRef, private templateRef: TemplateRef) {
   }
 
-  set local(expression) {
+  set local(expression: string) {
      if (!this.viewContainer.length) {
        this.view = this.viewContainer.createEmbeddedView(this.templateRef);
      } else {
