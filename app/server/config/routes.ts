@@ -1,8 +1,6 @@
 import * as express from 'express'
 
-let router = express.Router();
-
-export default router
+export const router = express.Router();
 
 router.use((req, res, next) => {
   if (req.path.startsWith('/assets')) {

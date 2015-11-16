@@ -1,9 +1,9 @@
 /// <reference path='typings/bundle.d.ts' />
 
-import * as express    from 'express'
+import * as express from 'express'
 import * as handlebars from 'express-handlebars'
 
-import ROUTES from './config/routes'
+import { router } from './config/routes'
 
 let app = express();
 
@@ -18,6 +18,6 @@ app.use(express.static(`${__dirname}/../../public`));
 
 // Routes
 
-app.use('/', ROUTES);
+app.use('/', router);
 
 export default app;
