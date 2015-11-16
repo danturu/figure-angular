@@ -1,5 +1,6 @@
 **/*.js
 .DS_Store
+.env
 .npm
 .tmp
 node_modules

@@ -1,3 +1,3 @@
 export const CONFIG = {
-  firebaseUrl: 'https://figure-development.firebaseio.com',
+  firebaseUrl: '/* @echo FIREBASE_URL */',
 }

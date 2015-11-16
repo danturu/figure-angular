@@ -1,20 +1,24 @@
-import del          from 'del'
-import cprocess     from 'child_process'
-import gulp         from 'gulp';
+import del from 'del'
+import cprocess from 'child_process'
+import gulp from 'gulp';
 import autoprefixer from 'gulp-autoprefixer'
-import sass         from 'gulp-sass'
-import sequence     from 'gulp-sequence'
-import sourcemaps   from 'gulp-sourcemaps'
-import ts           from 'gulp-typescript'
+import sass from 'gulp-sass'
+import preprocess from 'gulp-preprocess'
+import sequence from 'gulp-sequence'
+import sourcemaps from 'gulp-sourcemaps'
+import ts from 'gulp-typescript'
+import dotenv from 'dotenv'
+
+let env = process.env.NODE_ENV || 'development'
+
+dotenv.load();
 
 /**
  * Shared tasks.
  */
 
-let env = process.env.NODE_ENV || 'development'
-
 let sharedConfig = {
-  lib: 'lib'
+  lib: 'lib',
 }
 
 gulp.task('play', sequence(['server.watch', 'client.watch'], 'server.start'));
@@ -24,11 +28,12 @@ gulp.task('play', sequence(['server.watch', 'client.watch'], 'server.start'));
  */
 
 let serverProject = ts.createProject('app/server/tsconfig.json', {
-  typescript: require('typescript')
+  typescript: require('typescript'),
 });
 
 let serverConfig = {
-  src: 'app/server,bin', dest: ''
+  src: 'app/server,bin',
+  dest: '',
 }
 
 // Clean
@@ -38,7 +43,7 @@ gulp.task('server.clean', done => del(serverConfig.dest, done));
 // Build
 
 gulp.task('server.build.ts', () => {
-  let result = gulp.src(`{${sharedConfig.lib},${serverConfig.src}}/**/*.ts`).pipe(ts(serverProject));
+  let result = gulp.src(`{${sharedConfig.lib},${serverConfig.src}}/**/*.ts`).pipe(preprocess()).pipe(ts(serverProject));
 
   return result.js.pipe(gulp.dest(serverConfig.dest));
 })
@@ -76,11 +81,12 @@ process.on('exit', () => {
  */
 
 let clientProject = ts.createProject('app/client/tsconfig.json', {
-  typescript: require('typescript')
+  typescript: require('typescript'),
 });
 
 let clientConfig = {
-  src: 'app/client', dest: 'public/assets',
+  src: 'app/client',
+  dest: 'public/assets',
 
   exts: {
     assets: "{svg,png,jpg,eot,svg,ttf,woff,woff2}"
@@ -93,7 +99,7 @@ let clientConfig = {
       "systemjs/dist/system.js",
       "firebase/lib/firebase-web.js",
     ]
-  }
+  },
 }
 
 // Clean
@@ -103,7 +109,7 @@ gulp.task('client.clean', done => del(clientConfig.dest, done));
 // Build
 
 gulp.task('client.build.ts', () => {
-  let result = gulp.src(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`, { base: clientConfig.src }).pipe(sourcemaps.init()).pipe(ts(clientProject));
+  let result = gulp.src(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`, { base: clientConfig.src }).pipe(sourcemaps.init()).pipe(preprocess()).pipe(ts(clientProject));
 
   return result.js.pipe(sourcemaps.write()).pipe(gulp.dest(clientConfig.dest));
 })
