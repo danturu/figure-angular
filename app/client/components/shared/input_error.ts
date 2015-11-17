@@ -16,14 +16,14 @@ const ERROR_MESSAGES: { [errorType: string]: string } = {
 
 @View({
   template: `
-    <span *ng-if="errorMessage !== null">{{ errorMessage }}</span>
+    <span *ng-if="errorMessage !== null">{{ highestErrorMessage }}</span>
   `,
 })
 
 export class InputError {
   controlPath: string;
   errorsOrder: string[];
-  errorMessage: string;
+  highestErrorMessage: string;
 
   private _subscribed: boolean;
 
@@ -38,17 +38,19 @@ export class InputError {
     let control = this._formDir.form.find(this.controlPath);
 
     if (control) {
-      this._subscribed = true;
-
       control.valueChanges.subscribe(value => {
-        for (let errorType of this.errorsOrder) {
-          if (control.hasError(errorType)) {
-            return this.errorMessage = this._errorMessage(errorType);
-          }
+        if (control.valid) {
+          return this.highestErrorMessage = null;
         }
 
-        this.errorMessage = null;
+        for (let errorType of this.errorsOrder) {
+          if (control.hasError(errorType)) {
+            return this.highestErrorMessage = this._errorMessage(errorType);
+          }
+        }
       });
+
+      this._subscribed = true;
     }
   }
 
