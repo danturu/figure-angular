@@ -1,5 +1,5 @@
 import { Component, View, Pipe, PipeTransform } from 'angular2/angular2'
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router'
+import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router'
 
 import { FirebaseRouter } from '../../services/firebase_router'
 import { FirebaseEventPipe } from '../../pipes/firebase_event_pipe'
@@ -45,13 +45,13 @@ class SortPipe implements PipeTransform {
 
     <nav class="forms">
       <ul>
-        <li *ng-for="#form of formsUrl | firebaseEvent | firebaseArray | sort">
+        <li *ng-for="#form of formsUrl | firebaseEvent | firebaseArray | sort" [class.router-link-active]="isActiveLink('/forms/' + form.$id)">
           <a class="show" [router-link]="['/ShowForm', { formId: form.$id }]">{{ form.name }}</a>
           <a class="edit" [router-link]="['/EditForm', { formId: form.$id }, 'Setup']">E</a>
         </li>
 
-        <li>
-          <a class="new" [router-link]="['/NewForm']">New Form</a>
+        <li class="new">
+          <a [router-link]="['/NewForm']">New Form</a>
         </li>
       </ul>
     </nav>
@@ -69,8 +69,12 @@ class SortPipe implements PipeTransform {
 export class Header {
   formsUrl: string;
 
-  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router) {
+  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router, private _location: Location) {
     this.formsUrl = this._firebaseRouter.url('/forms/$userId')
+  }
+
+  isActiveLink(path: string) {
+    return this._location.path().startsWith(path);
   }
 
   logout(event: MouseEvent) {

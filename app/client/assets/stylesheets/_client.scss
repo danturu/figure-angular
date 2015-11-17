@@ -40,15 +40,6 @@ app > header {
       color: darken(white, 20);
       display: block;
       font-weight: 500;
-
-      &:hover {
-        color: white;
-      }
-
-      &.router-link-active {
-        background-color: rgba(white, .1);
-        color: white;
-      }
     }
   }
 
@@ -59,8 +50,18 @@ app > header {
       x: hidden; y: auto;
     }
 
-    a.show, a.new {
+    li, li.new a {
+      &.router-link-active {
+        background-color: rgba(white, .1);
+      }
+    }
+
+    a.show, li.new a {
       padding: 20px 30px;
+
+      &:hover {
+        color: white;
+      }
     }
 
     a.edit {
@@ -85,6 +86,10 @@ app > header {
 
     a {
       padding: 20px 30px;
+
+      &:hover {
+        color: white;
+      }
     }
   }
 }
