@@ -4,6 +4,7 @@ import { Router, CanActivate } from 'angular2/router'
 import { FirebaseRouter } from '../../lib/firebase/firebase'
 import { FormAttrs } from '../../../../lib/models/form'
 import { authRequired } from '../../utils/can_activate'
+import { InputError } from '../shared/input_error'
 
 @Component({
   selector: 'form-component.new',
@@ -11,7 +12,8 @@ import { authRequired } from '../../utils/can_activate'
 
 @View({
   directives: [
-    FORM_DIRECTIVES
+    FORM_DIRECTIVES,
+    InputError,
   ],
 
   template: `
@@ -25,6 +27,7 @@ import { authRequired } from '../../utils/can_activate'
         <label>
           <div class="label">Name</div>
           <input type="text" ng-control="name" #name="form" required>
+          <error control="name" [order]="['required']"></error>
         </label>
       </div>
 
