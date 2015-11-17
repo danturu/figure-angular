@@ -2,6 +2,7 @@ import { Component, View, Host, NgForm } from 'angular2/angular2'
 
 const ERROR_MESSAGES: { [errorType: string]: string } = {
   required: 'The field is required.',
+  emails: 'The field should be a email list.'
 }
 
 @Component({
@@ -40,7 +41,7 @@ export class InputError {
       this._subscribed = true;
 
       control.valueChanges.subscribe(value => {
-        for (let errorType of this.errorsOrder){
+        for (let errorType of this.errorsOrder) {
           if (control.hasError(errorType)) {
             return this.errorMessage = this._errorMessage(errorType);
           }

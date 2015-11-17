@@ -1,10 +1,11 @@
 import { FORM_DIRECTIVES, Component, View } from 'angular2/angular2'
 import { Router, CanActivate } from 'angular2/router'
 
+import { EmailsValidator } from './emails_validator'
 import { FirebaseRouter } from '../../lib/firebase/firebase'
 import { FormAttrs } from '../../../../lib/models/form'
-import { authRequired } from '../../utils/can_activate'
 import { InputError } from '../shared/input_error'
+import { authRequired } from '../../utils/can_activate'
 
 @Component({
   selector: 'form-component.new',
@@ -13,6 +14,7 @@ import { InputError } from '../shared/input_error'
 @View({
   directives: [
     FORM_DIRECTIVES,
+    EmailsValidator,
     InputError,
   ],
 
@@ -23,13 +25,29 @@ import { InputError } from '../shared/input_error'
     </header>
 
     <form #f="form" (submit)="onSubmit(f.value)">
-      <div class="input" [ng-class]="{ valid: name.valid, invalid: !name.valid }">
-        <label>
-          <div class="label">Name</div>
-          <input type="text" ng-control="name" #name="form" required>
-          <error control="name" [order]="['required']"></error>
-        </label>
-      </div>
+      <fieldset>
+        <legend>General</legend>
+
+        <div class="input">
+          <label>
+            <div class="label">Name</div>
+            <input type="text" ng-control="name" #name="form" required>
+            <error control="name" [order]="['required']"></error>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Notifications</legend>
+
+        <div class="input">
+          <label>
+            <div class="label">Send notifications to these email addresses</div>
+            <input type="text" ng-control="subscribers" #subscribers="form" emails>
+            <error control="subscribers" [order]="['emails']"></error>
+          </label>
+        </div>
+      </fieldset>
 
       <div class="button">
         <button type="submit" [disabled]="!f.valid">Create Form</form>
