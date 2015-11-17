@@ -43,7 +43,9 @@ gulp.task('server.clean', done => del(serverConfig.dest, done));
 // Build
 
 gulp.task('server.build.ts', () => {
-  let result = gulp.src(`{${sharedConfig.lib},${serverConfig.src}}/**/*.ts`).pipe(preprocess()).pipe(ts(serverProject));
+  let result = gulp.src(`{${sharedConfig.lib},${serverConfig.src}}/**/*.ts`)
+    .pipe(preprocess({ context: { SERVER: true } }))
+    .pipe(ts(serverProject));
 
   return result.js.pipe(gulp.dest(serverConfig.dest));
 })
@@ -109,7 +111,10 @@ gulp.task('client.clean', done => del(clientConfig.dest, done));
 // Build
 
 gulp.task('client.build.ts', () => {
-  let result = gulp.src(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`).pipe(sourcemaps.init()).pipe(preprocess()).pipe(ts(clientProject));
+  let result = gulp.src(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`)
+    .pipe(sourcemaps.init())
+    .pipe(preprocess({ context: { CLIENT: true } }))
+    .pipe(ts(clientProject));
 
   return result.js.pipe(sourcemaps.write()).pipe(gulp.dest(clientConfig.dest));
 })
