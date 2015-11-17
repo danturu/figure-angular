@@ -1,13 +1,13 @@
-import del from 'del'
 import cprocess from 'child_process'
+import del from 'del'
+import dotenv from 'dotenv'
 import gulp from 'gulp';
 import autoprefixer from 'gulp-autoprefixer'
-import sass from 'gulp-sass'
 import preprocess from 'gulp-preprocess'
+import sass from 'gulp-sass'
 import sequence from 'gulp-sequence'
 import sourcemaps from 'gulp-sourcemaps'
 import ts from 'gulp-typescript'
-import dotenv from 'dotenv'
 
 let env = process.env.NODE_ENV || 'development'
 
@@ -109,7 +109,7 @@ gulp.task('client.clean', done => del(clientConfig.dest, done));
 // Build
 
 gulp.task('client.build.ts', () => {
-  let result = gulp.src(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`, { base: clientConfig.src }).pipe(sourcemaps.init()).pipe(preprocess()).pipe(ts(clientProject));
+  let result = gulp.src(`{${sharedConfig.lib},${clientConfig.src}}/**/*.ts`).pipe(sourcemaps.init()).pipe(preprocess()).pipe(ts(clientProject));
 
   return result.js.pipe(sourcemaps.write()).pipe(gulp.dest(clientConfig.dest));
 })
