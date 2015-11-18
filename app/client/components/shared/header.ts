@@ -1,9 +1,7 @@
 import { Component, View, Pipe, PipeTransform } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router'
 
-import { FirebaseRouter } from '../../services/firebase_router'
-import { FirebaseEventPipe } from '../../pipes/firebase_event_pipe'
-import { FirebaseArrayPipe } from '../../pipes/firebase_array_pipe'
+import { FirebaseRouter, FirebaseEventPipe, FirebaseArrayPipe } from '../../lib/firebase/firebase'
 
 @Pipe({
   name: 'sort',

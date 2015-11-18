@@ -3,8 +3,7 @@ import { Router } from 'angular2/router'
 
 import { AssignLocal } from '../../../directives/assign_local'
 import { CurrentForm } from './current_form'
-import { FirebaseEventPipe } from '../../../pipes/firebase_event_pipe'
-import { FirebaseRouter } from '../../../services/firebase_router'
+import { FirebaseRouter, FirebaseEventPipe } from '../../../lib/firebase/firebase'
 
 @Component({
   selector: 'form-component.dashboard.settings',

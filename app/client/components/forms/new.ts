@@ -1,7 +1,7 @@
 import { FORM_DIRECTIVES, Component, View } from 'angular2/angular2'
 import { Router, CanActivate } from 'angular2/router'
 
-import { FirebaseRouter } from '../../services/firebase_router'
+import { FirebaseRouter } from '../../lib/firebase/firebase'
 import { FormAttrs } from '../../../../lib/models/form'
 import { authRequired } from '../../utils/can_activate'
 
