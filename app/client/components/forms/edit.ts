@@ -1,5 +1,5 @@
 import { Component, View } from 'angular2/angular2'
-import { ROUTER_DIRECTIVES, Router, RouterOutlet, RouteParams, RouteConfig, CanActivate } from 'angular2/router'
+import { ROUTER_DIRECTIVES, RouterOutlet, RouteParams, RouteConfig, CanActivate } from 'angular2/router'
 
 import { AssignLocal } from '../../directives/assign_local'
 import { FirebaseEventPipe } from '../../pipes/firebase_event_pipe'
@@ -12,12 +12,31 @@ import * as DashboardComponent from './dashboard/dashboard'
   {
     path: '/setup',
     component: DashboardComponent.Setup,
-    as: "Setup"
+    as: 'Setup',
+  },
+  {
+    path: '/Settings',
+    component: DashboardComponent.Settings,
+    as: 'Settings',
+  },
+  {
+    path: '/notifications',
+    component: DashboardComponent.Notifications,
+    as: 'Notifications',
+  },
+  {
+    path: '/Webhooks',
+    component: DashboardComponent.Webhooks,
+    as: 'Webhooks',
   },
 ])
 
 @Component({
   selector: 'form-component.edit',
+
+  providers: [
+    DashboardComponent.CurrentForm,
+  ],
 })
 
 @View({
@@ -33,19 +52,26 @@ import * as DashboardComponent from './dashboard/dashboard'
   template: `
     <div *assign-local="#form to formUrl | firebaseEvent" >
       <div *ng-if="form">
-        <h2>{{ form.name }}</h2>
-
         <nav class="dashboard">
           <ul>
-            <p>form dashboard goes here</p>
+            <li>
+              <a [router-link]="['./Setup']">Setup</a>
+            </li>
+            <li>
+              <a [router-link]="['./Settings']">Settings</a>
+            </li>
+            <li>
+              <a [router-link]="['./Notifications']">Notifications</a>
+            </li>
+            <li>
+              <a [router-link]="['./Webhooks']">Webhooks</a>
+            </li>
           </ul>
         </nav>
 
-        <container>
+        <container class="dashboard">
           <router-outlet></router-outlet>
         </container>
-
-        <button type="button" (click)="destroy()">Delete Form</form>
       </div>
     </div>
   `,
@@ -56,14 +82,8 @@ import * as DashboardComponent from './dashboard/dashboard'
 export class Edit {
   formUrl: string;
 
-  private _formRef: Firebase;
-
-  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router, params: RouteParams) {
+  constructor(private _firebaseRouter: FirebaseRouter, params: RouteParams, currentForm: DashboardComponent.CurrentForm) {
     this.formUrl = this._firebaseRouter.url(`/forms/$userId/${params.get('formId')}`);
-  }
-
-  destroy() {
-    this._firebaseRouter.ref(this.formUrl).remove()
-    this._router.navigate(['/Home']);
+    currentForm.formId = params.get('formId');
   }
 }

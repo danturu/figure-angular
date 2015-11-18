@@ -6,7 +6,7 @@ import { FirebaseEventPipe } from '../../../pipes/firebase_event_pipe'
 import { FirebaseRouter } from '../../../services/firebase_router'
 
 @Component({
-  selector: 'form-component.dashboard.setup',
+  selector: 'form-component.dashboard.notifications',
 })
 
 @View({
@@ -19,7 +19,7 @@ import { FirebaseRouter } from '../../../services/firebase_router'
   ],
 
   template: `
-    <h3>Setup</h3>
+    <h3>Notifications</h3>
 
     <div *assign-local="#form to formUrl | firebaseEvent" >
       <div *ng-if="form">
@@ -29,7 +29,7 @@ import { FirebaseRouter } from '../../../services/firebase_router'
   `,
 })
 
-export class Setup {
+export class Notifications {
   formUrl: string;
 
   constructor(private _firebaseRouter: FirebaseRouter, currentForm: CurrentForm) {

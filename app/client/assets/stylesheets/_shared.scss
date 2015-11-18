@@ -48,6 +48,10 @@ a {
     color: $color-figure;
     cursor: pointer;
   }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 ul, ol {

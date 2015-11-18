@@ -18,7 +18,7 @@ app > header {
   a.logo {
     @include size(100% 50px);
     display: block;
-    margin: 20px 0 10px;
+    margin: 20px 0 0;
     padding: 0px 30px;
 
     i {
@@ -101,5 +101,40 @@ app main {
 
   overflow: {
     x: hidden; y: auto;
+  }
+}
+
+form-component.edit {
+  nav.dashboard {
+    background-color: white;
+    padding: 0 20px;
+
+    ul {
+      align-items: center;
+      display: flex;
+      height: 70px;
+
+      li {
+        margin: 0 20px;
+      }
+    }
+
+    a {
+      font-size: 18px;
+      position: relative;
+
+      &.router-link-active {
+        color: $color-figure;
+
+        &:after {
+          border-bottom: 2px solid $color-figure;
+          bottom: -4px;
+          content: "";
+          left: 0;
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
   }
 }
