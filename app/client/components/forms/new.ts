@@ -50,7 +50,7 @@ import { authRequired } from '../../utils/can_activate'
       </fieldset>
 
       <div class="button">
-        <button type="submit" [disabled]="!f.valid">Create Form</form>
+        <button type="submit" [disabled]="!f.valid">Create Form</button>
       </div>
     </form>
   `,

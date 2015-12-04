@@ -50,12 +50,12 @@ gulp.task('server.build.ts', () => {
   return result.js.pipe(gulp.dest(serverConfig.dest));
 })
 
-gulp.task('server.build', sequence('server.clean', ['server.build.ts']));
+gulp.task('server.build', (done) => sequence('server.clean', ['server.build.ts'], done));
 
 // Watch
 
 gulp.task('server.watch.ts', () =>
-  gulp.watch(`{${sharedConfig.bin},${sharedConfig.lib},${serverConfig.src}}/**/*.ts`, () => sequence('server.build.ts', 'server.start')())
+  gulp.watch(`{${sharedConfig.bin},${sharedConfig.lib},${serverConfig.src}}/**/*.ts`, ['server.restart'])
 );
 
 gulp.task('server.watch', sequence('server.build', ['server.watch.ts']));
@@ -73,6 +73,8 @@ gulp.task('server.start', () => {
     if (code === 8) gulp.log('Error detected, waiting for changes...');
   });
 })
+
+gulp.task('server.restart', (done) => sequence('server.build.ts', 'server.start', done));
 
 process.on('exit', () => {
   if (node) node.kill()
@@ -140,7 +142,7 @@ gulp.task('client.build.assets', () =>
   gulp.src(`${clientConfig.src}/assets/**/*.${clientConfig.exts.assets}`).pipe(gulp.dest(clientConfig.dest))
 );
 
-gulp.task('client.build', sequence('client.clean', ['client.build.deps', 'client.build.assets'], ['client.build.ts', 'client.build.sass']));
+gulp.task('client.build', (done) => sequence('client.clean', ['client.build.deps', 'client.build.assets'], ['client.build.ts', 'client.build.sass'], done));
 
 // Watch
 
