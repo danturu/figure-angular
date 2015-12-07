@@ -5,7 +5,7 @@ import { EmailsValidator } from './emails_validator'
 import { FirebaseRouter } from '../../lib/firebase/firebase'
 import { FormAttrs } from '../../../../lib/models/form'
 import { InputError } from '../shared/input_error'
-import { authRequired } from '../../utils/can_activate'
+import { authRequired } from '../../lib/can_activate'
 
 @Component({
   selector: 'form-component.new',

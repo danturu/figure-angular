@@ -3,7 +3,7 @@
 .env
 .npm
 .tmp
+dist
 node_modules
 npm-debug.log
-public/assets
-!gulpfile.babel.js
+!gulpfile.js

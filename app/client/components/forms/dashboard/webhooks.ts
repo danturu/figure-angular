@@ -1,6 +1,6 @@
 import { Component, View } from 'angular2/angular2'
 
-import { AssignLocal } from '../../../directives/assign_local'
+import { AssignLocal } from '../../../lib/assign_local'
 import { CurrentForm } from './current_form'
 import { FirebaseRouter, FirebaseEventPipe } from '../../../lib/firebase/firebase'
 

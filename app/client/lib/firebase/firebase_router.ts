@@ -6,7 +6,7 @@ import * as Firebase from 'firebase'
 export class FirebaseRouter {
   private _ref: Firebase;
 
-  constructor(@Inject('app.config') private _config: { firebaseUrl: string }) {
+  constructor(@Inject('app.env') private _config: { firebaseUrl: string }) {
     this._ref = new Firebase(this._config.firebaseUrl);
   }
 

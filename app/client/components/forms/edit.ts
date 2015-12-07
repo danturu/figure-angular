@@ -1,9 +1,9 @@
 import { Component, View } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouterOutlet, RouteParams, RouteConfig, CanActivate } from 'angular2/router'
 
-import { AssignLocal } from '../../directives/assign_local'
+import { AssignLocal } from '../../lib/assign_local'
 import { FirebaseRouter, FirebaseEventPipe } from '../../lib/firebase/firebase'
-import { authRequired } from '../../utils/can_activate'
+import { authRequired } from '../../lib/can_activate'
 
 import * as DashboardComponent from './dashboard/dashboard'
 

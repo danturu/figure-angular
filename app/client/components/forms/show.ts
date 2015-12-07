@@ -1,9 +1,9 @@
 import { Component, View } from 'angular2/angular2'
 import { RouteParams, CanActivate } from 'angular2/router'
 
-import { AssignLocal } from '../../directives/assign_local'
+import { AssignLocal } from '../../lib/assign_local'
 import { FirebaseRouter, FirebaseEventPipe } from '../../lib/firebase/firebase'
-import { authRequired } from '../../utils/can_activate'
+import { authRequired } from '../../lib/can_activate'
 
 @Component({
   selector: 'form-component.show',

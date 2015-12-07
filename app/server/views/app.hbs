@@ -7,17 +7,49 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" media="screen" href="assets/stylesheets/app.css">
+    <link rel="stylesheet" media="screen" href="assets/app.css">
 
-    <script src="/assets/system.js"></script>
-    <script src="/assets/app/client/config/system.js"></script>
-    <script src="/assets/angular2.dev.js"></script>
-    <script src="/assets/router.dev.js"></script>
+    {{#if development}}
+      <script src="/node_modules/systemjs/dist/system.js"></script>
+
+      <script>
+        System.config({
+          map: {
+            'angular2/angular2': '/node_modules/angular2/bundles/angular2.js',
+            'angular2/router': '/node_modules/angular2/bundles/router.js',
+            'firebase': '/node_modules/firebase/lib/firebase-web.js',
+            'app': 'assets/app/client',
+          },
+
+          meta: {
+            'angular2/angular2': {
+              format: 'register',
+            },
+
+            'angular2/router': {
+              format: 'register',
+            },
+
+            'firebase': {
+              format: 'cjs',
+            },
+          },
+
+          packages: {
+            'app': {
+              defaultExtension: 'js'
+            }
+          }
+        });
+
+        System.import('app/bootstrap').catch(console.log.bind(console));
+      </script>
+    {{else}}
+      <!-- production sfx package -->
+    {{/if}}
  </head>
 
   <body class="app">
     <app>Loading...</app>
-
-    <script>System.import('app/client/bootstrap').catch(console.log.bind(console));</script>
   </body>
 </html>

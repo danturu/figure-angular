@@ -1,5 +1,3 @@
-/// <reference path='typings/bundle.d.ts' />
-
 import { View, Component } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 

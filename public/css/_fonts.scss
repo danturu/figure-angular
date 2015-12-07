@@ -1,5 +1,5 @@
 @font-face {
-  src: url("../fonts/open_sans_light.woff");
+  src: url("./open_sans_light.woff");
 
   font: {
     family: OpenSans; weight: 300;
@@ -7,7 +7,7 @@
 }
 
 @font-face {
-  src: url("../fonts/open_sans_regular.woff");
+  src: url("./open_sans_regular.woff");
 
   font: {
     family: OpenSans; weight: 400;
@@ -15,7 +15,7 @@
 }
 
 @font-face {
-  src: url("../fonts/open_sans_semibold.woff");
+  src: url("./open_sans_semibold.woff");
 
   font: {
     family: OpenSans; weight: 500;

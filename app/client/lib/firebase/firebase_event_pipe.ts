@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, WrappedValue, Pipe, PipeTransform, PipeOnDestroy } from 'angular2/angular2'
+import { ChangeDetectorRef, WrappedValue, Pipe, PipeTransform, OnDestroy } from 'angular2/angular2'
 import * as Firebase from 'firebase'
 
 @Pipe({
   name: 'firebaseEvent', pure: false
 })
 
-export class FirebaseEventPipe implements PipeTransform, PipeOnDestroy {
+export class FirebaseEventPipe implements PipeTransform, OnDestroy {
   private _firebaseRef: Firebase;
   private _latestValue: any;
   private _latestReturnedValue: any;
@@ -13,7 +13,7 @@ export class FirebaseEventPipe implements PipeTransform, PipeOnDestroy {
   constructor(private _changeDetectorRef: ChangeDetectorRef) {
   }
 
-  onDestroy() {
+  ngOnDestroy() {
     if (this._firebaseRef) {
       this._firebaseRef.off();
     }
