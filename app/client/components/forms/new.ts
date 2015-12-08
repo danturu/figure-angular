@@ -2,7 +2,7 @@ import { FORM_DIRECTIVES, Component, View } from 'angular2/angular2'
 import { Router, CanActivate } from 'angular2/router'
 
 import { EmailsValidator } from './emails_validator'
-import { FirebaseRouter } from '../../lib/firebase/firebase'
+import { FirebaseRouter } from '../../lib/firebase_router'
 import { FormAttrs } from '../../../../lib/models/form'
 import { InputError } from '../shared/input_error'
 import { authRequired } from '../../lib/can_activate'

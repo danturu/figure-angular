@@ -1,9 +1,9 @@
 import { Component, View } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouterOutlet, RouteParams, RouteConfig, CanActivate } from 'angular2/router'
+import { FIREBASE_PIPES, AssignLocal } from 'farel/farel'
 
-import { AssignLocal } from '../../lib/assign_local'
-import { FirebaseRouter, FirebaseEventPipe } from '../../lib/firebase/firebase'
 import { authRequired } from '../../lib/can_activate'
+import { FirebaseRouter } from '../../lib/firebase_router'
 
 import * as DashboardComponent from './dashboard/dashboard'
 
@@ -45,11 +45,11 @@ import * as DashboardComponent from './dashboard/dashboard'
   ],
 
   pipes: [
-    FirebaseEventPipe,
+    FIREBASE_PIPES,
   ],
 
   template: `
-    <div *assign-local="#form to formUrl | firebaseEvent" >
+    <div *assign-local="#form to formUrl | toObject" >
       <div *ng-if="form">
         <nav class="dashboard">
           <ul>

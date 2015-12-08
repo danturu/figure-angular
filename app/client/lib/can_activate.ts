@@ -1,6 +1,6 @@
 import { Router } from 'angular2/router'
 
-import { FirebaseRouter } from '../lib/firebase/firebase'
+import { FirebaseRouter } from '../lib/firebase_router'
 import { appInjector } from './app_injector'
 
 export const canActivate = (callback: (auth: boolean) => string[], next: any, prev: any): Promise<boolean> => {

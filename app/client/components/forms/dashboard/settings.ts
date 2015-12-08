@@ -1,9 +1,9 @@
 import { Component, View } from 'angular2/angular2'
 import { Router } from 'angular2/router'
+import { FIREBASE_PIPES, AssignLocal } from 'farel/farel'
 
-import { AssignLocal } from '../../../lib/assign_local'
 import { CurrentForm } from './current_form'
-import { FirebaseRouter, FirebaseEventPipe } from '../../../lib/firebase/firebase'
+import { FirebaseRouter } from '../../../lib/firebase_router'
 
 @Component({
   selector: 'form-component.dashboard.settings',
@@ -15,16 +15,16 @@ import { FirebaseRouter, FirebaseEventPipe } from '../../../lib/firebase/firebas
   ],
 
   pipes: [
-    FirebaseEventPipe,
+    FIREBASE_PIPES,
   ],
 
   template: `
     <h3>Settings</h3>
 
-    <div *assign-local="#form to formUrl | firebaseEvent" >
+    <div *assign-local="#form to formUrl | toObject">
       <div *ng-if="form">
         {{ form.name }}
-        <button type="button" (click)="destroy()">Delete Form</form>
+        <button type="button" (click)="destroy()">Delete Form</button>
       </div>
     </div>
   `,

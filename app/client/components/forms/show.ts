@@ -1,8 +1,8 @@
 import { Component, View } from 'angular2/angular2'
 import { RouteParams, CanActivate } from 'angular2/router'
+import { FIREBASE_PIPES, AssignLocal } from 'farel/farel'
 
-import { AssignLocal } from '../../lib/assign_local'
-import { FirebaseRouter, FirebaseEventPipe } from '../../lib/firebase/firebase'
+import { FirebaseRouter } from '../../lib/firebase_router'
 import { authRequired } from '../../lib/can_activate'
 
 @Component({
@@ -15,11 +15,11 @@ import { authRequired } from '../../lib/can_activate'
   ],
 
   pipes: [
-    FirebaseEventPipe,
+    FIREBASE_PIPES,
   ],
 
   template: `
-    <div *assign-local="#form to formUrl | firebaseEvent" >
+    <div *assign-local="#form to formUrl | toObject" >
       <div *ng-if="form">
         <h2>{{ form.name }}</h2>
 

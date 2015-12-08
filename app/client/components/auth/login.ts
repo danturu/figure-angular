@@ -1,7 +1,7 @@
 import { Component, View, Inject } from 'angular2/angular2'
 import { Router, CanActivate } from 'angular2/router'
 
-import { FirebaseRouter } from '../../lib/firebase/firebase'
+import { FirebaseRouter } from '../../lib/firebase_router'
 import { canAuth } from '../../lib/can_activate'
 
 @Component({

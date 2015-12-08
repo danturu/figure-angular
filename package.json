@@ -12,6 +12,7 @@
     "angular2": "^2.0.0-alpha.48",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
+    "farel": "^0.1.2",
     "firebase": "^2.3.2",
     "systemjs": "^0.19.6"
   },

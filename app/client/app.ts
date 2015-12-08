@@ -1,7 +1,7 @@
 import { View, Component } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 
-import { FirebaseRouter } from './lib/firebase/firebase_router'
+import { FirebaseRouter } from './lib/firebase_router'
 
 import * as AuthComponent from './components/auth/auth'
 import * as FormsComponent from './components/forms/forms'

@@ -1,27 +1,8 @@
-import { Component, View, Pipe, PipeTransform } from 'angular2/angular2'
+import { Component, View } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router'
+import { FIREBASE_PIPES } from 'farel/farel'
 
-import { FirebaseRouter, FirebaseEventPipe, FirebaseArrayPipe } from '../../lib/firebase/firebase'
-
-@Pipe({
-  name: 'sort',
-})
-
-class SortPipe implements PipeTransform {
-  transform(value: any[], args: any[] = null): any[] {
-    if (Array.isArray(value)) {
-      let comparator = (lhs: { name: string }, rhs: { name: string }): number => {
-        if (lhs.name < rhs.name) return -1;
-        if (lhs.name > rhs.name) return  1;
-        return 0
-      }
-
-      return value.sort(comparator);
-    } else {
-      return value;
-    }
-  }
-}
+import { FirebaseRouter } from '../../lib/firebase_router'
 
 @Component({
   selector: 'header.app',
@@ -33,9 +14,7 @@ class SortPipe implements PipeTransform {
   ],
 
   pipes: [
-    FirebaseEventPipe,
-    FirebaseArrayPipe,
-    SortPipe,
+    FIREBASE_PIPES,
   ],
 
   template: `
@@ -43,9 +22,9 @@ class SortPipe implements PipeTransform {
 
     <nav class="forms">
       <ul>
-        <li *ng-for="#form of formsUrl | firebaseEvent | firebaseArray | sort" [class.router-link-active]="isActiveLink('/forms/' + form.$id)">
-          <a class="show" [router-link]="['/ShowForm', { formId: form.$id }]">{{ form.name }}</a>
-          <a class="edit" [router-link]="['/EditForm', { formId: form.$id }, 'Setup']">E</a>
+        <li *ng-for="#form of formsUrl | orderByChild:'name' | toArray" [class.router-link-active]="isActiveLink('/forms/' + form.$id)">
+          <a class="show" [router-link]="['/ShowForm', { formId: form.$key }]">{{ form.name }}</a>
+          <a class="edit" [router-link]="['/EditForm', { formId: form.$key }, 'Setup']">E</a>
         </li>
 
         <li class="new">
