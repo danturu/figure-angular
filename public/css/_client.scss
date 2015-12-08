@@ -16,9 +16,8 @@ app > header {
   min-width: 200px;
 
   a.logo {
-    @include size(100% 50px);
+    @include size(100% 65px);
     display: block;
-    margin: 20px 0 0;
     padding: 0px 30px;
 
     i {
@@ -36,10 +35,19 @@ app > header {
     }
 
     a {
-      transition: color .1s linear;
       color: darken(white, 20);
       display: block;
       font-weight: 500;
+      padding: 20px 30px;
+      transition: color .1s;
+
+      &.router-link-active {
+        background-color: rgba(white, .1);
+      }
+
+      &:hover {
+        color: white;
+      }
     }
   }
 
@@ -49,53 +57,17 @@ app > header {
     overflow: {
       x: hidden; y: auto;
     }
-
-    li, li.new a {
-      &.router-link-active {
-        background-color: rgba(white, .1);
-      }
-    }
-
-    a.show, li.new a {
-      padding: 20px 30px;
-
-      &:hover {
-        color: white;
-      }
-    }
-
-    a.edit {
-      @include size(20px);
-      background-color: rgba(white, .5);
-      border-radius: 50%;
-      color: $color-figure;
-      position: absolute;
-      right: 15px;
-      text-align: center;
-      top: 20px;
-      transition: background-color .1s linear;
-
-      &:hover {
-        background-color: white;
-      }
-    }
   }
 
   nav.account {
     margin-top: auto;
-
-    a {
-      padding: 20px 30px;
-
-      &:hover {
-        color: white;
-      }
-    }
   }
 }
 
+
 app main {
   background-color: darken(white, 5);
+  display: flex;
   flex: 4;
   min-width: 700px;
 
@@ -104,7 +76,13 @@ app main {
   }
 }
 
-form-component.edit {
+form-component {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+form-component.show {
   nav.dashboard {
     background-color: white;
     padding: 0 20px;
@@ -112,7 +90,7 @@ form-component.edit {
     ul {
       align-items: center;
       display: flex;
-      height: 70px;
+      height: 65px;
 
       li {
         margin: 0 20px;
@@ -120,8 +98,9 @@ form-component.edit {
     }
 
     a {
-      font-size: 18px;
+      font-size: 17px;
       position: relative;
+      transition: color .1s;
 
       &.router-link-active {
         color: $color-figure;
@@ -134,6 +113,10 @@ form-component.edit {
           position: absolute;
           right: 0;
         }
+      }
+
+      &[disabled] {
+        color: darken(white, 30);
       }
     }
   }

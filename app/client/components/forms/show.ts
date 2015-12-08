@@ -1,16 +1,46 @@
 import { Component, View } from 'angular2/angular2'
-import { RouteParams, CanActivate } from 'angular2/router'
+import { ROUTER_DIRECTIVES, RouteConfig, RouteParams, CanActivate } from 'angular2/router'
 import { FIREBASE_PIPES, AssignLocal } from 'farel/farel'
 
 import { FirebaseRouter } from '../../lib/firebase_router'
 import { authRequired } from '../../lib/can_activate'
 
+import * as DashboardComponent from './dashboard/dashboard'
+
+@RouteConfig([
+ {
+    path: '/setup',
+    component: DashboardComponent.Setup,
+    name: 'Setup',
+  },
+  {
+    path: '/Settings',
+    component: DashboardComponent.Settings,
+    name: 'Settings',
+  },
+  {
+    path: '/notifications',
+    component: DashboardComponent.Notifications,
+    name: 'Notifications',
+  },
+  {
+    path: '/Webhooks',
+    component: DashboardComponent.Webhooks,
+    name: 'Webhooks',
+  },
+])
+
 @Component({
   selector: 'form-component.show',
+
+  providers: [
+    DashboardComponent.CurrentForm,
+  ],
 })
 
 @View({
   directives: [
+    ROUTER_DIRECTIVES,
     AssignLocal,
   ],
 
@@ -19,15 +49,26 @@ import { authRequired } from '../../lib/can_activate'
   ],
 
   template: `
-    <div *assign-local="#form to formUrl | toObject" >
-      <div *ng-if="form">
-        <h2>{{ form.name }}</h2>
+    <nav class="dashboard">
+      <ul>
+        <li>
+          <a [router-link]="['Setup']">Setup</a>
+        </li>
+        <li>
+          <a [router-link]="['Settings']">Settings</a>
+        </li>
+        <li>
+          <a [router-link]="['Notifications']">Notifications</a>
+        </li>
+        <li>
+          <a [router-link]="['Webhooks']">Webhooks</a>
+        </li>
+      </ul>
+    </nav>
 
-        <container>
-          <p>form info goes here</p>
-        </container>
-      </div>
-    </div>
+    <container class="dashboard">
+      <router-outlet></router-outlet>
+    </container>
   `,
 })
 
@@ -36,7 +77,7 @@ import { authRequired } from '../../lib/can_activate'
 export class Show {
   formUrl: string;
 
-  constructor(firebaseRouter: FirebaseRouter, params: RouteParams) {
-    this.formUrl = firebaseRouter.url(`/forms/$userId/${params.get('formId')}`);
+  constructor(private _firebaseRouter: FirebaseRouter, params: RouteParams, currentForm: DashboardComponent.CurrentForm) {
+    currentForm.formId = params.get('formId');
   }
 }

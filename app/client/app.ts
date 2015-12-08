@@ -2,36 +2,31 @@ import { View, Component } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 
 import { FirebaseRouter } from './lib/firebase_router'
+import { AppHeader } from './components/shared/app_header'
 
 import * as AuthComponent from './components/auth/auth'
 import * as FormsComponent from './components/forms/forms'
-import * as SharedComponent from './components/shared/shared'
 
 @RouteConfig([
   {
     path: '/',
     component: FormsComponent.New,
-    as: "Home"
+    name: 'Home',
   },
   {
     path: '/login',
     component: AuthComponent.Login,
-    as: "Login"
+    name: 'Login'
   },
   {
     path: '/forms/new',
     component: FormsComponent.New,
-    as: "NewForm"
+    name: 'NewForm',
   },
   {
-    path: '/forms/:formId',
+    path: '/forms/:id/...',
     component: FormsComponent.Show,
-    as: "ShowForm"
-  },
-  {
-    path: '/forms/:formId/...',
-    component: FormsComponent.Edit,
-    as: "EditForm"
+    name: 'ShowForm'
   },
 ])
 
@@ -42,7 +37,7 @@ import * as SharedComponent from './components/shared/shared'
 @View({
   directives: [
     ROUTER_DIRECTIVES,
-    SharedComponent.Header,
+    AppHeader,
   ],
 
   template: `

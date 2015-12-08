@@ -1,5 +1,5 @@
 import { Component, View } from 'angular2/angular2'
-import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router'
+import { ROUTER_DIRECTIVES, Router } from 'angular2/router'
 import { FIREBASE_PIPES } from 'farel/farel'
 
 import { FirebaseRouter } from '../../lib/firebase_router'
@@ -18,17 +18,16 @@ import { FirebaseRouter } from '../../lib/firebase_router'
   ],
 
   template: `
-    <a [router-link]="['/NewForm']" class="logo"><i></i></a>
+    <a [router-link]="['Home']" class="logo"><i></i></a>
 
     <nav class="forms">
       <ul>
-        <li *ng-for="#form of formsUrl | orderByChild:'name' | toArray" [class.router-link-active]="isActiveLink('/forms/' + form.$id)">
-          <a class="show" [router-link]="['/ShowForm', { formId: form.$key }]">{{ form.name }}</a>
-          <a class="edit" [router-link]="['/EditForm', { formId: form.$key }, 'Setup']">E</a>
+        <li *ng-for="#form of formsUrl | orderByChild:'name' | toArray">
+          <a [router-link]="['ShowForm', { id: form.$key }, 'Setup']">{{ form.name }}</a>
         </li>
 
         <li class="new">
-          <a [router-link]="['/NewForm']">New Form</a>
+          <a [router-link]="['NewForm']">New Form</a>
         </li>
       </ul>
     </nav>
@@ -43,15 +42,11 @@ import { FirebaseRouter } from '../../lib/firebase_router'
   `,
 })
 
-export class Header {
+export class AppHeader {
   formsUrl: string;
 
-  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router, private _location: Location) {
+  constructor(private _firebaseRouter: FirebaseRouter, private _router: Router) {
     this.formsUrl = this._firebaseRouter.url('/forms/$userId')
-  }
-
-  isActiveLink(path: string) {
-    return this._location.path().startsWith(path);
   }
 
   logout(event: MouseEvent) {
